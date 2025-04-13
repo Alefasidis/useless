@@ -125,7 +125,6 @@
     }
 
     .btn {
-      position: relative;
       display: block;
       width: 100%;
       padding: 12px 20px;
@@ -146,40 +145,6 @@
       color: var(--bg);
       box-shadow: 0 0 10px var(--primary);
       transform: scale(1.03);
-    }
-
-    .status-text {
-      font-size: 0.8em;
-      margin-bottom: 5px;
-      margin-left: 20px;
-      text-align: left;
-    }
-
-    .status-online {
-      color: #00ff66;
-    }
-
-    .status-offline {
-      color: #ff4d4d;
-    }
-
-    .status-badge {
-      position: absolute;
-      bottom: 10px;
-      right: 10px;
-      font-size: 0.85em;
-      font-weight: bold;
-      padding: 4px 8px;
-      border-radius: 12px;
-      color: white;
-    }
-
-    .status-online {
-      background-color: #00ff66;
-    }
-
-    .status-offline {
-      background-color: #ff4d4d;
     }
 
     select {
@@ -206,23 +171,9 @@
     <h1>AlefasNet Portal</h1>
     <h4>This is useless</h4>
 
-    <div class="status-text" id="statusTextCasaOS"></div>
-    <a class="btn" id="casaLink" href="http://hub.alefasnet.xyz:81" target="_blank">
-      🌐 CasaOS
-      <span class="status-badge" id="statusBadgeCasaOS">?</span>
-    </a>
-
-    <div class="status-text" id="statusTextPtero"></div>
-    <a class="btn" href="https://panel.alefasnet.xyz" target="_blank">
-      🎮 Pterodactyl Panel
-      <span class="status-badge" id="statusBadgePtero">?</span>
-    </a>
-
-    <div class="status-text" id="statusTextDonut"></div>
-    <a class="btn" href="https://donut.alefasnet.xyz/" target="_blank">
-      🍩 Donut
-      <span class="status-badge" id="statusBadgeDonut">?</span>
-    </a>
+    <a class="btn" href="http://hub.alefasnet.xyz:81" target="_blank">🌐 CasaOS</a>
+    <a class="btn" href="https://panel.alefasnet.xyz" target="_blank">🎮 Pterodactyl Panel</a>
+    <a class="btn" href="https://donut.alefasnet.xyz/" target="_blank">🍩 Donut</a>
 
     <select onchange="changeTheme(this.value)">
       <option value="dark">Dark</option>
@@ -239,31 +190,6 @@
   </div>
 
   <script>
-    // Status checker
-    async function checkServiceStatus(url, badgeId, textId) {
-      const badge = document.getElementById(badgeId);
-      const text = document.getElementById(textId);
-      badge.textContent = "?";
-      badge.className = "status-badge status-pending";
-      try {
-        const controller = new AbortController();
-        setTimeout(() => controller.abort(), 2000);
-        await fetch(url, { mode: 'no-cors', signal: controller.signal });
-        badge.textContent = "Online";
-        badge.className = "status-badge status-online";
-        text.className = "status-text status-online";
-      } catch {
-        badge.textContent = "Offline";
-        badge.className = "status-badge status-offline";
-        text.className = "status-text status-offline";
-      }
-    }
-
-    checkServiceStatus("http://arxaio-server.alefasnet.xyz:81", "statusBadgeCasaOS", "statusTextCasaOS");
-    checkServiceStatus("https://panel.alefasnet.xyz", "statusBadgePtero", "statusTextPtero");
-    checkServiceStatus("https://donut.alefasnet.xyz/", "statusBadgeDonut", "statusTextDonut");
-
-    // Theme
     function changeTheme(theme) {
       document.body.className = theme;
       localStorage.setItem("theme", theme);
