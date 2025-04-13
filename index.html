@@ -1,0 +1,277 @@
+<!DOCTYPE html>
+<html lang="el">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>AlefasNet</title>
+  <style>
+    :root {
+      --bg: #121212;
+      --text: #e0e0e0;
+      --primary: #ffffff;
+      --glass: rgba(255, 255, 255, 0.05);
+      --border: rgba(255, 255, 255, 0.1);
+    }
+
+    body.light {
+      --bg: #f4f4f4;
+      --text: #1a1a1a;
+      --primary: #000000;
+      --glass: rgba(255, 255, 255, 0.6);
+      --border: rgba(0, 0, 0, 0.1);
+    }
+
+    body.dark-purple {
+      --bg: #2b003e;
+      --text: #d1b2e3;
+      --primary: #9b59b6;
+      --glass: rgba(0, 0, 0, 0.3);
+      --border: rgba(255, 255, 255, 0.2);
+    }
+
+    body.dark-green {
+      --bg: #0b1d0b;
+      --text: #b8ffce;
+      --primary: #00ff99;
+      --glass: rgba(0, 64, 0, 0.3);
+      --border: rgba(0, 128, 64, 0.2);
+    }
+
+    body.light-blue {
+      --bg: #d7f0ff;
+      --text: #003344;
+      --primary: #1e90ff;
+      --glass: rgba(255, 255, 255, 0.5);
+      --border: rgba(0, 0, 0, 0.1);
+    }
+
+    body.light-green {
+      --bg: #ecfff0;
+      --text: #003322;
+      --primary: #00cc66;
+      --glass: rgba(255, 255, 255, 0.5);
+      --border: rgba(0, 0, 0, 0.1);
+    }
+
+    body.orange {
+      --bg: #332100;
+      --text: #ffe0b2;
+      --primary: #ff9800;
+      --glass: rgba(102, 51, 0, 0.3);
+      --border: rgba(255, 153, 0, 0.2);
+    }
+
+    body.pink {
+      --bg: #2d0c1d;
+      --text: #ffc0cb;
+      --primary: #ff69b4;
+      --glass: rgba(64, 0, 32, 0.3);
+      --border: rgba(255, 105, 180, 0.2);
+    }
+
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body {
+      background: var(--bg);
+      color: var(--text);
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      padding: 20px;
+      transition: background 0.4s, color 0.4s;
+    }
+
+    .container {
+      background: var(--glass);
+      border: 1px solid var(--border);
+      border-radius: 20px;
+      backdrop-filter: blur(12px);
+      padding: 40px;
+      max-width: 420px;
+      width: 100%;
+      text-align: center;
+      box-shadow: 0 0 20px var(--primary);
+      animation: fadeIn 1s ease forwards;
+    }
+
+    @keyframes fadeIn {
+      0% {
+        opacity: 0;
+        transform: translateY(20px);
+      }
+      100% {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+
+    h1 {
+      font-size: 2.4em;
+      color: var(--primary);
+      margin-bottom: 10px;
+    }
+
+    h4 {
+      font-size: 0.95em;
+      color: #888;
+      margin-bottom: 30px;
+    }
+
+    .btn {
+      position: relative;
+      display: block;
+      width: 100%;
+      padding: 12px 20px;
+      margin: 10px 0;
+      font-size: 1em;
+      color: var(--primary);
+      background: transparent;
+      border: 2px solid var(--primary);
+      border-radius: 10px;
+      cursor: pointer;
+      transition: all 0.3s ease;
+      text-decoration: none;
+      text-align: left;
+    }
+
+    .btn:hover {
+      background-color: var(--primary);
+      color: var(--bg);
+      box-shadow: 0 0 10px var(--primary);
+      transform: scale(1.03);
+    }
+
+    .status-text {
+      font-size: 0.8em;
+      margin-bottom: 5px;
+      margin-left: 20px;
+      text-align: left;
+    }
+
+    .status-online {
+      color: #00ff66;
+    }
+
+    .status-offline {
+      color: #ff4d4d;
+    }
+
+    .status-badge {
+      position: absolute;
+      bottom: 10px;
+      right: 10px;
+      font-size: 0.85em;
+      font-weight: bold;
+      padding: 4px 8px;
+      border-radius: 12px;
+      color: white;
+    }
+
+    .status-online {
+      background-color: #00ff66;
+    }
+
+    .status-offline {
+      background-color: #ff4d4d;
+    }
+
+    select {
+      margin-top: 10px;
+      padding: 8px;
+      border-radius: 10px;
+      font-size: 1em;
+      border: 2px solid var(--primary);
+      background: var(--glass);
+      color: var(--text);
+      backdrop-filter: blur(8px);
+    }
+
+    footer {
+      margin-top: 20px;
+      font-size: 0.85em;
+      color: #777;
+      text-align: center;
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <h1>AlefasNet Portal</h1>
+    <h4>This is useless</h4>
+
+    <div class="status-text" id="statusTextCasaOS"></div>
+    <a class="btn" id="casaLink" href="http://arxaio-server.alefasnet.xyz:81" target="_blank">
+      🌐 CasaOS
+      <span class="status-badge" id="statusBadgeCasaOS">?</span>
+    </a>
+
+    <div class="status-text" id="statusTextPtero"></div>
+    <a class="btn" href="https://panel.alefasnet.xyz" target="_blank">
+      🎮 Pterodactyl Panel
+      <span class="status-badge" id="statusBadgePtero">?</span>
+    </a>
+
+    <div class="status-text" id="statusTextDonut"></div>
+    <a class="btn" href="https://donut.alefasnet.xyz/" target="_blank">
+      🍩 Donut
+      <span class="status-badge" id="statusBadgeDonut">?</span>
+    </a>
+
+    <select onchange="changeTheme(this.value)">
+      <option value="dark">Dark</option>
+      <option value="light">Light</option>
+      <option value="dark-purple">Dark Purple</option>
+      <option value="dark-green">Dark Green</option>
+      <option value="light-blue">Light Blue</option>
+      <option value="light-green">Light Green</option>
+      <option value="orange">Orange</option>
+      <option value="pink">Pink</option>
+    </select>
+
+    <footer>© 2025 AlefasNet — All rights reserved</footer>
+  </div>
+
+  <script>
+    // Status checker
+    async function checkServiceStatus(url, badgeId, textId) {
+      const badge = document.getElementById(badgeId);
+      const text = document.getElementById(textId);
+      badge.textContent = "?";
+      badge.className = "status-badge status-pending";
+      try {
+        const controller = new AbortController();
+        setTimeout(() => controller.abort(), 2000);
+        await fetch(url, { mode: 'no-cors', signal: controller.signal });
+        badge.textContent = "Online";
+        badge.className = "status-badge status-online";
+        text.className = "status-text status-online";
+      } catch {
+        badge.textContent = "Offline";
+        badge.className = "status-badge status-offline";
+        text.className = "status-text status-offline";
+      }
+    }
+
+    checkServiceStatus("http://arxaio-server.alefasnet.xyz:81", "statusBadgeCasaOS", "statusTextCasaOS");
+    checkServiceStatus("https://panel.alefasnet.xyz", "statusBadgePtero", "statusTextPtero");
+    checkServiceStatus("https://donut.alefasnet.xyz/", "statusBadgeDonut", "statusTextDonut");
+
+    // Theme
+    function changeTheme(theme) {
+      document.body.className = theme;
+      localStorage.setItem("theme", theme);
+    }
+    window.onload = () => {
+      const savedTheme = localStorage.getItem("theme") || "dark";
+      changeTheme(savedTheme);
+    }
+  </script>
+</body>
+</html>
